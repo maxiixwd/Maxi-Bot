@@ -11,16 +11,16 @@ module.exports = {
   config: {
     name: "art",
     version: "1.6.9",
-    author: "Nazrul",
-    role: 0,
-    description: "{pn} - Enhance your photos with artful transformations!",
-    category: "art",
-    countDown: 5,
-    guide: { 
-      en: "{pn} reply to an image"
-    }
+    credits: "Nazrul",
+    hasPermssion: 0,
+    description: "{pn} - Enhance your photos with  artful transformations!",
+    prefix: true,
+    usePrefix: true,
+    commandCategory: "art",
+    cooldowns: 5,
+    usages:"{pn} reply to a image"
   },
-  onStart: async function ({ message, event, args, api }) {
+  run: async function ({ message, event, args, api }) {
     try {
       const cp = ["bal","zombie","anime","ghost", "watercolor", "sketch", "abstract", "cartoon","monster"];
       const prompts = args[0] || cp[Math.floor(Math.random() * cp.length)];
