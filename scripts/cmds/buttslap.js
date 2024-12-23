@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 module.exports = {
   config: {
     name: "buttslap",
-    aliases: "btslap",
+    aliases: ["btslap"],
     version: "1.1",
     author: "KSHITIZ",
     countDown: 5,
