@@ -42,7 +42,7 @@ function startFishing(usersData) {
       }
     }
     fs.writeFileSync(fishingDataFile, JSON.stringify(fishingData, null, 2));
-  }, 1800000);
+  }, 3600000);
 }
 
 module.exports = {
