@@ -6,7 +6,7 @@ module.exports = {
 		author: "Loufi",
 		role: 0,
 		shortDescription: {
-			en: "Top 15 Richest Users"
+			en: "𝐓𝐨𝐩 𝟏𝟓 𝐑𝐢𝐜𝐡𝐞𝐬𝐭 𝐩𝐞𝐨𝐩𝐥𝐞"
 		},
 		longDescription: {
 			en: ""
@@ -45,7 +45,7 @@ module.exports = {
 			});
 
 			// Create the message content
-			const messageText = `Top 15 Richest Users:\n${topUsersList.join('\n')}`;
+			const messageText = `𝐓𝐨𝐩 𝟏𝟓 𝐑𝐢𝐜𝐡𝐞𝐬𝐭 𝐩𝐞𝐨𝐩𝐥𝐞 \n${topUsersList.join('\n')}`;
 
 			// Send the reply
 			return message.reply(messageText);
@@ -64,7 +64,7 @@ module.exports = {
 		});
 
 		// Create the message content
-		const messageText = `Top 15 Richest Users:\n${topUsersList.join('\n')}`;
+		const messageText = `𝐓𝐨𝐩 𝟏𝟓 𝐑𝐢𝐜𝐡𝐞𝐬𝐭 𝐩𝐞𝐨𝐩𝐥𝐞 \n${topUsersList.join('\n')}`;
 
 		// Send the reply
 		message.reply(messageText);
