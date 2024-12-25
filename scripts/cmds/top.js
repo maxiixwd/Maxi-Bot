@@ -1,6 +1,6 @@
 module.exports = {
 	config: {
-		name: "toprichest",
+		name: "top",
 		aliases: ["toprich"],  // Alias without space for regular command
 		version: "1.1",
 		author: "Loufi",
