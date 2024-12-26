@@ -269,40 +269,26 @@ default:
 function formatNumberWithFullForm(number) {
   const fullForms = [
     "",
-    "Thousand",
-    "Million",
-    "Billion",
-    "Trillion",
-    "Quadrillion",
-    "Quintillion",
-    "Sextillion",
-    "Septillion",
-    "Octillion",
-    "Nonillion",
-    "Decillion",
-    "Undecillion",
-    "Duodecillion",
-    "Tredecillion",
-    "Quattuordecillion",
-    "Quindecillion",
-    "Sexdecillion",
-    "Septendecillion",
-    "Octodecillion",
-    "Novemdecillion",
-    "Vigintillion",
-    "Unvigintillion",
-    "Duovigintillion",
-    "Tresvigintillion",
-    "Quattuorvigintillion",
-    "Quinvigintillion",
-    "Sesvigintillion",
-    "Septemvigintillion",
-    "Octovigintillion",
-    "Novemvigintillion",
-    "Trigintillion",
-    "Untrigintillion",
-    "Duotrigintillion",
-    "Googol",
+    "k", // Thousand
+    "m", // Million
+    "b", // Billion
+    "t", // Trillion
+    "q", // Quadrillion
+    "qq", // Quintillion
+    "s", // Sextillion
+    "sp", // Septillion
+    "o", // Octillion
+    "n", // Nonillion
+    "d", // Decillion
+    "ud", // Undecillion
+    "dd", // Duodecillion
+    "td", // Tredecillion
+    "qd", // Quattuordecillion
+    "qd2", // Quindecillion
+    "sd", // Sexdecillion
+    "spd", // Septendecillion
+    "od", // Octodecillion
+    "nd" // Novemdecillion
   ];
 
   // Calculate the full form of the number (e.g., Thousand, Million, Billion)
