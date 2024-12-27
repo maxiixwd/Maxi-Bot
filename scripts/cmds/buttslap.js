@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 module.exports = {
   config: {
     name: "buttslap",
-    aliases: ["btslap"],
+    aliases: ["btslap"], 
     version: "1.1",
     author: "KSHITIZ",
     countDown: 5,
@@ -19,7 +19,7 @@ module.exports = {
 
   langs: {
     vi: {
-      noTag: ""
+      noTag: "" 
     },
     en: {
       noTag: "You must tag the person you want to slap"
@@ -29,16 +29,24 @@ module.exports = {
   onStart: async function ({ event, message, usersData, args, getLang }) {
     const uid1 = event.senderID;
     const uid2 = Object.keys(event.mentions)[0];
-    if (!uid2)
-      return message.reply(getLang("noTag"));
+
+    // Check if the mentioned user is the restricted ID
+    if (uid2 === "100078140834638" || uid2 === "100084690500330") { 
+      return message.reply("who the hell are you moron 😵‍💫"); 
+    }
+
+    if (!uid2) {
+      return message.reply(getLang("noTag")); 
+    }
+
     const avatarURL1 = await usersData.getAvatarUrl(uid1);
     const avatarURL2 = await usersData.getAvatarUrl(uid2);
-    const img = await new DIG.Spank().getImage(avatarURL1, avatarURL2);
-    const pathSave = `${__dirname}/tmp/${uid1}_${uid2}spank.png`;
+    const img = await new DIG.Spank().getImage(avatarURL1, avatarURL2); 
+    const pathSave = `${__dirname}/tmp/${uid1}_${uid2}spank.png`; 
     fs.writeFileSync(pathSave, Buffer.from(img));
-    const content = args.join(' ').replace(Object.keys(event.mentions)[0], "");
+    const content = args.join(' ').replace(Object.keys(event.mentions)[0], ""); 
     message.reply({
-      body: `${(content || "hehe boii")}`,
+      body: `${(content || "hehe boii")}`, 
       attachment: fs.createReadStream(pathSave)
     }, () => fs.unlinkSync(pathSave));
   }
