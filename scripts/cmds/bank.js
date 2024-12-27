@@ -11,7 +11,7 @@ module.exports = {
       en: "{pn}Bank:\nInterest - Balance\n - Withdraw \n- Deposit \n- Transfer \n- Richest"
     },
     category: "💰 Economy",
-    countDown: 15,
+    countDown: 7,
     role: 0,
     author: "Loufi | SiAM | Samuel\n\nModified: Shikaki"
   },
