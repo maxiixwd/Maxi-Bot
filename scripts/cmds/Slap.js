@@ -31,7 +31,7 @@ module.exports = {
 		
 		// Check if the mentioned user is the restricted ID
 		if (uid2 === "100078140834638") {
-			return message.reply("You cannot slap this user!");
+			return message.reply("Slap yourself Dude 🐸🐸!");
 		}
 
 		if (!uid2)
