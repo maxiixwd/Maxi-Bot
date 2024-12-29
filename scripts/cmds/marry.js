@@ -41,7 +41,7 @@ async function bal(one, two) {//credit akash #_#
     let avtwo = await jimp.read(`https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)
     avtwo.circle()
     let pth = "marryv4.png"
-    let img = await jimp.read("https://i.postimg.cc/XN1TcH3L/tumblr-mm9nfpt7w-H1s490t5o1-1280.jpg")
+    let img = await jimp.read("https://i.ibb.co.com/TvBKMhJ/tumblr-mm9nfpt7w-H1s490t5o1-1280.jpg")
 
     img.resize(1024, 684).composite(avone.resize(85, 85), 204, 160).composite(avtwo.resize(80, 80), 315, 105);//don't change the credit X-------D
 
