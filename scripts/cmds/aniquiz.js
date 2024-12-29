@@ -9,7 +9,7 @@ const f = c.join(__dirname, 'anime.json');
 module.exports = {
   config: {
     name: "aniquiz",
-    aliases: ["animequiz"],
+    aliases: ["animequiz","aniqz" ],
     version: "1.0",
     author: "Kshitiz",
     role: 0,
@@ -64,7 +64,7 @@ module.exports = {
      
       setTimeout(async () => {
         await api.unsendMessage(sentMessage.messageID);
-      }, 15000);
+      }, 30000);
     } catch (error) {
       console.error("Error:", error);
       message.reply("An error occurred.");
