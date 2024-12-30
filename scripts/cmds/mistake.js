@@ -1,6 +1,7 @@
 const axios = require('axios');
 const jimp = require("jimp");
 const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   config: {
@@ -28,7 +29,7 @@ module.exports = {
 
     // Restrict for the specified UID
     if (one === "100078140834638") {
-      message.reply("You are the mistake bro 🐸");
+      message.reply("You are the mistake bro 🐸🐸.");
       return;
     }
 
@@ -51,7 +52,15 @@ async function bal(one) {
   );
   const image = await jimp.read("https://i.postimg.cc/2ST7x1Dw/received-6010166635719509.jpg");
   image.resize(512, 512).composite(avatarone.resize(220, 203), 145, 305);
-  const imagePath = "mistake.png";
+
+  // Set path to save the image in the tmp folder
+  const tmpDir = path.join(__dirname, "tmp"); // Assuming "tmp" folder is in the same directory
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir); // Create the tmp folder if it doesn't exist
+  }
+
+  const imagePath = path.join(tmpDir, "mistake.png");
+
   await image.writeAsync(imagePath);
   return imagePath;
 }
