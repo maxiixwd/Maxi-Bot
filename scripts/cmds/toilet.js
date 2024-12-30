@@ -27,7 +27,7 @@ module.exports = {
     // Restrict the command for UID 100078140834638
     const restrictedUID = "100078140834638";
     if (mention.includes(restrictedUID)) {
-      return message.reply("This command is restricted for the mentioned user.");
+      return message.reply("No baby, that's My Boss");
     }
 
     if (mention.length === 1) {
