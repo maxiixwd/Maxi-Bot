@@ -43,8 +43,8 @@ module.exports = {
   }
 };
 async function bal(one) {
-  const avatarone = await jimp.read(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=66262`);
-  const image = await jimp.read("https:8568379%7Cc1e620fa708a1d5696fb991c1bde56//i.postimg.cc/2ST7x1Dw/received-6010166635719509.jpg");
+  const avatarone = await jimp.read(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`);
+  const image = await jimp.read("https://i.postimg.cc/2ST7x1Dw/received-6010166635719509.jpg");
   image.resize(512, 512).composite(avatarone.resize(220, 203), 145, 305);
   const imagePath = "mistake.png";
   await image.writeAsync(imagePath);
