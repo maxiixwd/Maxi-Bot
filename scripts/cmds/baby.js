@@ -14,7 +14,7 @@ module.exports.config = {
   description: "better then all sim simi",
   category: "chat",
   guide: {
-    en: "{pn} [anyMessage] OR\nteach [YourMessage] - [Reply1], [Reply2], [Reply3]... OR\nteach [react] [YourMessage] - [react1], [react2], [react3]... OR\nremove [YourMessage] OR\nrm [YourMessage] - [indexNumber] OR\nmsg [YourMessage] OR\nlist OR \nall OR\nedit [YourMessage] - [NeeMessage]"
+    en: "{pn} [anyMessage] OR\nteach [YourMessage] - [Reply1], [Reply2], [Reply3]... OR\nteach [react] [YourMessage] - [react1], [react2], [react3]... OR\nremove [YourMessage] OR\nrm [YourMessage] - [indexNumber] OR\nmsg [YourMessage] OR\nlist OR \nall OR\nedit [YourMessage] - [NewMessage]"
   }
 };
 
@@ -70,7 +70,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const command = dipto.split(' - ')[1];
       if (command.length < 2) return api.sendMessage('❌ | Invalid format! Use edit [YourMessage] - [NewReply]', event.threadID, event.messageID);
       const dA = (await axios.get(`${link}?edit=${args[1]}&replace=${command}&senderID=${uid}`)).data.message;
-      return api.sendMessage(`changed ${dA}`, event.threadID, event.messageID);
+      return api.sendMessage(`Changed ${dA}`, event.threadID, event.messageID);
     }
 
     if (args[0] === 'teach' && args[1] !== 'amar' && args[1] !== 'react') {
@@ -123,47 +123,60 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 };
 
 module.exports.onReply = async ({ api, event, Reply }) => {
-  try{
-  if (event.type == "message_reply") {
-    const a = (await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(event.body?.toLowerCase())}&senderID=${event.senderID}&font=1`)).data.reply;
-    await api.sendMessage(a, event.threadID, (error, info) => {
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName: this.config.name,
-        type: "reply",
-        messageID: info.messageID,
-        author: event.senderID,
-        a
-      });
-    }, event.messageID);
-  }  
-  }catch(err){
-      return api.sendMessage(`Error: ${err.message}`, event.threadID, event.messageID);
-    }};
-
-module.exports.onChat = async ({ api, event,message }) => {
-  try{
-    const body = event.body ? event.body.toLowerCase() : ""
-    if(body.startsWith("baby") || body.startsWith("bby") || body.startsWith("janu")){
-      const arr = body.replace(/^\S+\s*/, "")
-      if(!arr){ api.sendMessage("Present 💐", event.threadID, (error, info) => {
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName: this.config.name,
-        type: "reply",
-        messageID: info.messageID,
-        author: event.senderID
-      });
-    }, event.messageID);}
-    const a = (await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(arr)}&senderID=${event.senderID}&font=1`)).data.reply;
-    await api.sendMessage(a, event.threadID, (error, info) => {
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName: this.config.name,
-        type: "reply",
-        messageID: info.messageID,
-        author: event.senderID,
-        a
-      });
-    }, event.messageID);
+  try {
+    if (event.type == "message_reply") {
+      const a = (await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(event.body?.toLowerCase())}&senderID=${event.senderID}&font=1`)).data.reply;
+      await api.sendMessage(a, event.threadID, (error, info) => {
+        global.GoatBot.onReply.set(info.messageID, {
+          commandName: this.config.name,
+          type: "reply",
+          messageID: info.messageID,
+          author: event.senderID,
+          a
+        });
+      }, event.messageID);
     }
-  }catch(err){
-      return api.sendMessage(`Error baby 🥺🥺`, event.threadID, event.messageID);
-    }};
+  } catch (err) {
+    return api.sendMessage(`Error: ${err.message}`, event.threadID, event.messageID);
+  }
+};
+
+module.exports.onChat = async ({ api, event, message }) => {
+  try {
+    const body = event.body ? event.body.toLowerCase() : "";
+    if (body.startsWith("baby") || body.startsWith("bby") || body.startsWith("janu")) {
+      const arr = body.replace(/^\S+\s*/, "");
+      if (!arr) {
+        return api.sendMessage("Present 💐", event.threadID, (error, info) => {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: this.config.name,
+            type: "reply",
+            messageID: info.messageID,
+            author: event.senderID
+          });
+        }, event.messageID);
+      }
+
+      const response = await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(arr)}&senderID=${event.senderID}&font=1`);
+      
+      if (response.data && response.data.reply) {
+        const a = response.data.reply;
+        return api.sendMessage(a, event.threadID, (error, info) => {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: this.config.name,
+            type: "reply",
+            messageID: info.messageID,
+            author: event.senderID,
+            a
+          });
+        }, event.messageID);
+      } else {
+        return api.sendMessage("Sorry, I couldn't understand that.", event.threadID, event.messageID);
+      }
+}
+    }
+  } catch (err) {
+    console.error("Error:", err);  // Log the error to the console for debugging
+    return api.sendMessage("Something went wrong. Please try again later.", event.threadID, event.messageID);  // Provide a generic error message
+  }
+};
