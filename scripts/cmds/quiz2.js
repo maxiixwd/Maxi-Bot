@@ -9,7 +9,7 @@ module.exports = {
     name: "quiz2",
     aliases: ["qz2"],
     version: "2.0",
-    author: "Kshitiz",// Modified by Mohammed Abir
+    author: "Kshitiz", // Modified by Mohammed Abir
     role: 0,
     shortDescription: "Play quiz",
     longDescription: "Play a quiz based on different categories",
@@ -51,6 +51,7 @@ module.exports = {
         commandName: this.config.name,
         messageID: sentQuestion.messageID,
         correctAnswerLetter: quizData.correct_answer_letter.toLowerCase(), // Lowercase for case-insensitive checking
+        author: event.senderID, // Store the author to restrict replies
         usersAnswered: new Set() // Track users who have answered
       });
 
@@ -71,6 +72,9 @@ module.exports = {
     const userAnswer = event.body.trim().toLowerCase(); // Convert user answer to lowercase
     const correctAnswerLetter = Reply.correctAnswerLetter.toLowerCase();
 
+    // Ignore replies from unauthorized users
+    if (userID !== Reply.author) return;
+
     // Ignore the reply if the user has already answered
     if (Reply.usersAnswered.has(userID)) {
       return;
@@ -88,8 +92,8 @@ module.exports = {
 
     if (userAnswer === correctAnswerLetter) {
       // Add coins and exp for correct answer
-      const rewardCoins = 800;
-      const rewardExp = 300;
+      const rewardCoins = 700;
+      const rewardExp = 200;
       await addCoinsAndExp(userID, rewardCoins, rewardExp, usersData);
       await message.reply(`🎉🎊 Congratulations! Your answer is correct.\nYou have received ${rewardCoins} coins and ${rewardExp} EXP.`);
     } else {
