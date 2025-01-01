@@ -95,7 +95,7 @@ module.exports = {
         // If the user gives the correct answer
         if (userReply === correctAnswer.toLowerCase()) {
           // Reward coins and experience points
-          let rewardCoins = 400;
+          let rewardCoins = 333;
           let rewardExp = 150;
           await usersData.set(author, {
             money: userData.money + rewardCoins,
