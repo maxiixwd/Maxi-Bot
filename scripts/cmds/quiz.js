@@ -21,7 +21,7 @@ module.exports = {
 
   onStart: async function ({ api, event, usersData, args }) {
     const input = args.join('').toLowerCase() || "bn";
-    let timeout = 300;  // Timeout in seconds for the unsend message
+    let timeout = 60;  // Timeout in seconds for the unsend message
     let category = "bangla";
     
     if (input === "bn" || input === "bangla") {
