@@ -77,11 +77,7 @@ module.exports = {
 
     // Ensure only the quiz author can reply
     if (event.senderID !== author) {
-      return api.sendMessage(
-        "Who are you bby🐸🦎",
-        event.threadID,
-        event.messageID
-      );
+      return;
     }
 
     // Fetch user data
