@@ -8,9 +8,9 @@ const dataFile = path.join(__dirname, "anime.json");
 module.exports = {
   config: {
     name: "aniquiz",
-    aliases: ["animequiz","aniqz"],
+    aliases: ["animequiz", "aniqz"],
     version: "1.0",
-    author: "Kshitiz",
+    author: "Kshitiz",//Modified By Mohammed Abir
     role: 0,
     shortDescription: "Guess the anime character",
     longDescription: "Guess the name of the anime character based on provided traits and tags.",
@@ -52,6 +52,7 @@ module.exports = {
           author: event.senderID,
           messageID: info.messageID,
           correctAnswers: [fullName.toLowerCase(), firstName.toLowerCase()],
+          hasResponded: false, // Track if the caller has already responded
         });
 
         // Auto-unsend after 15 seconds
@@ -67,10 +68,14 @@ module.exports = {
 
   onReply: async function ({ event, api, Reply, usersData }) {
     try {
-      const { correctAnswers, author } = Reply;
+      const { correctAnswers, author, hasResponded } = Reply;
 
-      // Ignore replies from unauthorized users
-      if (event.senderID !== author) return;
+      // Ignore replies if the sender is not the command initiator or has already responded
+      if (event.senderID !== author || hasResponded) return;
+
+      // Mark as responded to prevent further replies
+      Reply.hasResponded = true;
+      global.GoatBot.onReply.set(Reply.messageID, Reply);
 
       const userAnswer = event.body.trim().toLowerCase();
       const userData = await usersData.get(author) || { money: 0, exp: 0 };
