@@ -44,10 +44,11 @@ module.exports = {
               commandName: this.config.name,
               type: "reply",
               messageID: info.messageID,
-              author: event.senderID,
+              author: event.senderID, // Store the ID of the caller
               link,
               country,
               attempts: 0,
+              hasResponded: false, // Track if the caller has already responded
             });
           },
           event.messageID
@@ -76,8 +77,11 @@ module.exports = {
   },
 
   onReply: async function ({ api, event, Reply, usersData, threadsData }) {
-    const { country, attempts } = Reply;
-    const maxAttempts = 3;
+    const { country, attempts, author, hasResponded } = Reply;
+    const maxAttempts = 1;
+
+    // Silently ignore if the responder is not the command initiator or has already responded
+    if (event.senderID !== author || hasResponded) return;
 
     if (event.type === "message_reply") {
       const reply = event.body.toLowerCase();
@@ -86,7 +90,7 @@ module.exports = {
 
       if (attempts >= maxAttempts) {
         return api.sendMessage(
-          "🚫 | You have reached the maximum number of attempts (3).",
+          "🚫 | You have reached the maximum number of attempts (1).",
           event.threadID,
           event.messageID
         );
@@ -106,12 +110,17 @@ module.exports = {
           const userID = event.senderID;
 
           threadData.data.flagWins = threadData.data.flagWins || {};
-          threadData.data.flagWins[userID] = (threadData.data.flagWins[userID] || 0) + 1;
+          threadData.data.flagWins[userID] =
+            (threadData.data.flagWins[userID] || 0) + 1;
 
           await threadsData.set(event.threadID, threadData);
 
           const message = `✅ | Correct answer!\nYou have earned ${getCoin} coins and ${getExp} exp.`;
           await api.sendMessage(message, event.threadID, event.messageID);
+
+          // Mark that the caller has responded
+          Reply.hasResponded = true;
+          global.GoatBot.onReply.set(Reply.messageID, Reply);
         } catch (err) {
           console.error("Error updating user data:", err.message);
           await api.sendMessage(
@@ -122,9 +131,10 @@ module.exports = {
         }
       } else {
         Reply.attempts += 1;
+        Reply.hasResponded = true; // Mark that the caller has responded
         global.GoatBot.onReply.set(Reply.messageID, Reply);
         api.sendMessage(
-          `❌ | Wrong Answer. You have ${maxAttempts - Reply.attempts} attempts left.\n✅ | Try Again baby!`,
+          `❌ | Wrong Answer. You have no attempts left.\n✅ | Better luck next time!`,
           event.threadID,
           event.messageID
         );
